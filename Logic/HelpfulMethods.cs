@@ -28,7 +28,7 @@ namespace HighSchoolProject.Logic
             decimal decNum;
             while (decimal.TryParse(Console.ReadLine(), out decNum) == false)
             {
-                Console.WriteLine("Skriv ett heltal");
+                Console.WriteLine("Skriv ett hel- eller decimaltal");
             }
             return decNum;
         }
@@ -36,7 +36,7 @@ namespace HighSchoolProject.Logic
         public static void ClearAgain()
         {
             Console.Clear();
-            Console.WriteLine("\nVänligen välj alternativ 1 eller 2");
+            Console.WriteLine("\nVänligen välj ett alternativ");
         }
     }
 }

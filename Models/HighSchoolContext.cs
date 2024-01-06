@@ -21,8 +21,6 @@ public partial class HighSchoolContext : DbContext
 
     public virtual DbSet<Course> Courses { get; set; }
 
-    public virtual DbSet<Enrollment> Enrollments { get; set; }
-
     public virtual DbSet<Grade> Grades { get; set; }
 
     public virtual DbSet<Personnel> Personnel { get; set; }
@@ -73,26 +71,11 @@ public partial class HighSchoolContext : DbContext
                 .HasConstraintName("FK_Courses_Personnel");
         });
 
-        modelBuilder.Entity<Enrollment>(entity =>
-        {
-            entity.Property(e => e.EnrollmentId).HasColumnName("EnrollmentID");
-            entity.Property(e => e.FkCourseId).HasColumnName("fk_CourseID");
-            entity.Property(e => e.FkStudentId).HasColumnName("fk_StudentID");
-
-            entity.HasOne(d => d.FkCourse).WithMany(p => p.Enrollments)
-                .HasForeignKey(d => d.FkCourseId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Enrollments_Courses");
-
-            entity.HasOne(d => d.FkStudent).WithMany(p => p.Enrollments)
-                .HasForeignKey(d => d.FkStudentId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Enrollments_Students");
-        });
-
         modelBuilder.Entity<Grade>(entity =>
         {
-            entity.Property(e => e.GradeId).HasColumnName("GradeID");
+            entity.HasKey(e => e.EnrollmentId);
+
+            entity.Property(e => e.EnrollmentId).HasColumnName("EnrollmentID");
             entity.Property(e => e.FkCourseId).HasColumnName("fk_CourseID");
             entity.Property(e => e.FkPersonnelId).HasColumnName("fk_PersonnelID");
             entity.Property(e => e.FkStudentId).HasColumnName("fk_StudentID");
@@ -100,7 +83,6 @@ public partial class HighSchoolContext : DbContext
 
             entity.HasOne(d => d.FkCourse).WithMany(p => p.Grades)
                 .HasForeignKey(d => d.FkCourseId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Grades_Courses");
 
             entity.HasOne(d => d.FkPersonnel).WithMany(p => p.Grades)

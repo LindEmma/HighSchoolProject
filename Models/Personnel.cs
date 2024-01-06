@@ -5,18 +5,6 @@ namespace HighSchoolProject.Models;
 
 public partial class Personnel
 {
-    public Personnel()
-    {
-
-    }
-    public Personnel(string firstName, string lastName, int fkRoleId, DateOnly dt, decimal salary)
-    {
-        FirstName = firstName;
-        LastName = lastName;
-        FkRoleId = fkRoleId;
-        EmploymentDate = dt;
-        SalaryKrPerMonth = salary;
-    }
     public int PersonnelId { get; set; }
 
     public string FirstName { get; set; } = null!;
@@ -38,4 +26,17 @@ public partial class Personnel
     public virtual Section? FkSection { get; set; }
 
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
+
+    public Personnel()
+    {
+
+    }
+    public Personnel(string firstName, string lastName, int fkRoleId, DateOnly dt, decimal salary)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        FkRoleId = fkRoleId;
+        EmploymentDate = dt;
+        SalaryKrPerMonth = salary;
+    }
 }

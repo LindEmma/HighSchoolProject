@@ -66,7 +66,7 @@ namespace HighSchoolProject.Logic
                 }
                 else
                 {
-                    Console.WriteLine("Var god välj j eller n");
+                    HelpfulMethods.ClearAgain();
                 }
 
                 HelpfulMethods.PressKey();

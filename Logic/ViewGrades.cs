@@ -11,22 +11,6 @@ namespace HighSchoolProject.Logic
         //Shows the set grades
         public void AverageGrade()
         {
-            string answer = "";
-            do
-            {
-                Console.WriteLine("Vill du:\n1.Se snittbetyget i en kurs\n2.Se snittbetyget i en årskull?");
-                answer = Console.ReadLine();
-                if (answer != "1" && answer != "2")
-                {
-                    HelpfulMethods.ClearAgain();
-                    Console.WriteLine();
-                }
-            } while (answer != "1" && answer != "2");
-            Console.Clear();
-
-            //Shows the average grade in chosen subject
-            if (answer == "1")
-            {
                 int courseCount;
                 int choice;
 
@@ -61,18 +45,11 @@ namespace HighSchoolProject.Logic
                 }
                 else
                 {
-                    //grades returns a decimal, calculated with Average() from the chosen grade
-                    var grades = context.Grades.Where(s => s.FkCourseId == choice).Average(s => s.Grade1);
-                    var gradeRounded = Math.Round(grades, 2);
+                    //grades returns a double, calculated with Average() from the chosen grade
+                    var grades = context.Grades.Where(s => s.FkCourseId == choice&&s.Grade1.HasValue).Average(s => s.Grade1);
+                    var gradeRounded = Math.Round((double)grades, 2);
                     Console.WriteLine("Snittbetyget i ämnet är: " + gradeRounded);
                 }
-                HelpfulMethods.PressKey();
-            }
-
-            else if (answer == "2")
-            {
-               // ej klar
-            }
             HelpfulMethods.PressKey();
         }
 
@@ -80,11 +57,11 @@ namespace HighSchoolProject.Logic
         {
             Console.WriteLine($"Alla satta betyg:");
 
-            var grades = context.Grades.Include(s => s.FkPersonnel).Include(s => s.FkStudent).Include(c => c.FkCourse).OrderByDescending(d => d.DateOfIssue);
+            var grades = context.Grades.Include(s => s.FkPersonnel).Include(s => s.FkStudent).Include(c => c.FkCourse).OrderByDescending(d => d.GradeDateOfIssue);
 
             foreach (var grade in grades)
             {
-                Console.WriteLine($"{grade.DateOfIssue} - {grade.Grade1} - {grade.FkStudent.FirstName} {grade.FkStudent.LastName} - {grade.FkCourse.CourseName} - {grade.FkPersonnel.FirstName} {grade.FkPersonnel.LastName}");
+                Console.WriteLine($"{grade.GradeDateOfIssue} - {grade.Grade1} - {grade.FkStudent.FirstName} {grade.FkStudent.LastName} - {grade.FkCourse.CourseName} - {grade.FkPersonnel.FirstName} {grade.FkPersonnel.LastName}");
             }
             HelpfulMethods.PressKey();
         }

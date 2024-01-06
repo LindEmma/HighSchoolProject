@@ -37,9 +37,11 @@ namespace HighSchoolProject
             while (RunApp == true)
             {
                 Console.Clear();
+                PrintedMenus.Header();
                 PrintedMenus.StartMenu();
                 int answer = HelpfulMethods.ReadInt();
                 Console.Clear();
+                PrintedMenus.Header();
 
                 switch (answer)
                 {
@@ -58,7 +60,7 @@ namespace HighSchoolProject
                             case 3:
                                 break;
                             default:
-                                Console.WriteLine("vänligen väl ett alternativ");
+                                HelpfulMethods.ClearAgain();
                                 break;
                         }
                         break;
@@ -73,7 +75,7 @@ namespace HighSchoolProject
                                 VS.ViewAllStudents(); //klar
                                 break;
                             case 2:
-                                VS.StoredProcedures();
+                                VS.StudentInfoFromID();
                                 break;
                             case 3:
                                 AS.AddStudentToDB(); //klar
@@ -81,7 +83,7 @@ namespace HighSchoolProject
                             case 4:
                                 break;
                             default:
-                                Console.WriteLine("Vänligen välj ett alternativ");
+                                HelpfulMethods.ClearAgain();
                                 break;
                         }
                         break;
@@ -106,7 +108,7 @@ namespace HighSchoolProject
                             case 3:
                                 break;
                             default:
-                                Console.WriteLine("Vänligen välj ett alternativ");
+                                HelpfulMethods.ClearAgain();
                                 break;
                         }
                         break;
@@ -126,12 +128,12 @@ namespace HighSchoolProject
                                 VG.ShowAllGrades(); // klar
                                 break;
                             case 3:
-                                AG.AddGradeToDB(); //tom
+                                AG.AddGradeToDB(); //Klar
                                 break;
                             case 4:
                                 break;
                             default:
-                                Console.WriteLine("Vänligen välj ett alternativ");
+                                HelpfulMethods.ClearAgain();
                                 break;
                         }
                         break;
@@ -157,7 +159,7 @@ namespace HighSchoolProject
                                 //logga ut till startmenyn
                                 break;
                             default:
-                                Console.WriteLine("Vänligen välj ett alternativ");
+                                HelpfulMethods.ClearAgain();
                                 break;
                         }
                         break;
@@ -167,8 +169,7 @@ namespace HighSchoolProject
                         Quit();
                         break;
                     default:
-                        Console.WriteLine("Välj ett av alternativen");
-                        HelpfulMethods.PressKey();
+                        HelpfulMethods.ClearAgain();
                         break;
 
                 }

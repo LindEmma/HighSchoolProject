@@ -1,5 +1,6 @@
 ﻿using HighSchoolProject.Models;
 using Microsoft.EntityFrameworkCore;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,13 +45,19 @@ namespace HighSchoolProject.Logic
 
         public void AverageSalary() //gör en tabell med spectre console!
         {
+            BarChart bc = new BarChart();
+   
+
+
             Console.WriteLine("Snittlöner per avdelning (kr/månad)");
 
             var avgSalary = context.AverageSalaries.OrderBy(a => a.Avdelning);
             foreach(var a in avgSalary)
             {
-                Console.WriteLine($"Avdelning: {a.Avdelning}\nSnittlön: {Math.Round(a.Medellönen)}kr/mån");
+                bc.AddItem(a.Avdelning, (double)a.Medellönen, Color.Yellow);
+                //Console.WriteLine($"Avdelning: {a.Avdelning}\nSnittlön: {Math.Round(a.Medellönen)}kr/mån");
             }
+            AnsiConsole.Write(bc);
             HelpfulMethods.PressKey();
 
         }
