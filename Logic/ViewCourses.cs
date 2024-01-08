@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Spectre.Console;
 
 namespace HighSchoolProject.Logic
 {
@@ -14,13 +15,25 @@ namespace HighSchoolProject.Logic
 
         public void ViewAllCourses()
         {
-            Console.WriteLine("Alla kurser i databasen:");
-            var courses = context.Courses.OrderByDescending(c => c.StartDate).Include(p=>p.FkPersonnel);
+            Table table = new Table()
+            {
+                Title = new TableTitle("Alla kurser i databasen")
+            };
+
+            table.AddColumn("KursID");
+            table.AddColumn(new TableColumn("Kursnamn"));
+            table.AddColumn(new TableColumn("Lärare"));
+            table.AddColumn(new TableColumn("Startdatum"));
+            table.AddColumn(new TableColumn("Slutdatum"));
+
+            var courses = context.Courses.OrderByDescending(c => c.StartDate)
+                .Include(p=>p.FkPersonnel);
 
             foreach(var c in courses)
             {
-                Console.WriteLine($"Start:{c.StartDate}\nSlut: \n{c.EndDate}\nKursnamn: {c.CourseName}\n Lärare: {c.FkPersonnel.FirstName} {c.FkPersonnel.LastName}");
+                table.AddRow(c.CourseId.ToString(), c.CourseName, c.FkPersonnel.FirstName + c.FkPersonnel.LastName, c.StartDate.ToString(), c.EndDate.ToString());
             }
+            AnsiConsole.Write(table);
             HelpfulMethods.PressKey();
         }
 
@@ -30,10 +43,21 @@ namespace HighSchoolProject.Logic
             var active = context.Courses.Where(d => d.StartDate < dt && d.EndDate>dt);
             Console.WriteLine("Alla aktiva kurser:");
 
-            foreach(var a in active)
+            Table table = new Table()
             {
-                Console.WriteLine($"Startdatum: {a.StartDate}\nSlutdatum: {a.EndDate}\n Kursnamn: {a.CourseName}");
+                Title = new TableTitle("Alla pågående kurser")
+            };
+            table.AddColumn("KursID");
+            table.AddColumn(new TableColumn("Kursnamn"));
+            table.AddColumn(new TableColumn("Lärare"));
+            table.AddColumn(new TableColumn("Startdatum"));
+            table.AddColumn(new TableColumn("Slutdatum"));
+
+            foreach (var a in active)
+            {
+                table.AddRow(a.CourseId.ToString(),a.CourseName,a.FkPersonnel.FirstName+" "+a.FkPersonnel.LastName,a.StartDate.ToString(),a.EndDate.ToString());
             }
+            AnsiConsole.Write(table);
             HelpfulMethods.PressKey();
         }
     }

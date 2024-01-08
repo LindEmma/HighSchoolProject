@@ -66,62 +66,19 @@ namespace HighSchoolProject.Logic
                 orderStr = "efternamn Ö-A";
             }
 
-            //Lists all students in chosen order by a foreach-loop
-            Console.WriteLine("*** Alla elever på skolan ***");
-            Console.WriteLine($"*** Sorterat: {orderStr} ***");
+            Table table = new Table()
+            {
+                Title = new TableTitle("***Alla elever på skolan**\n**sorterat:" + orderStr, "green")
+            };
+            table.AddColumn("Förnamn");
+            table.AddColumn(new TableColumn("Efternamn"));
+
             foreach (var student in students)
             {
-                Console.WriteLine(student.FirstName + " " + student.LastName);
+                table.AddRow(student.FirstName, student.LastName);
             }
-            Console.WriteLine("**************************\n");
-            HelpfulMethods.PressKey();
-        }
-
-
-        //Method to show the students in a chosen class
-        public void ViewStudInClass()
-        {
-            var classes = context.Classes.OrderBy(c => c.ClassId);
-            int classint;
-
-            //shows list of classes and asks which one to see the students of. 
-            // classint is compared with ClassID
-            Console.WriteLine("Klasser:");
-            foreach (var x in classes)
-            {
-                Console.WriteLine(x.ClassId + ". " + x.ClassName);
-            }
-            do
-            {
-                {
-                    Console.WriteLine("Vilken klass vill du se? (1-9)");
-
-                    classint = HelpfulMethods.ReadInt();
-                }
-                if (classint < 1 || classint > 9)
-                {
-                    Console.WriteLine("Vänligen välj en klass mellan 1-9");
-                    HelpfulMethods.PressKey();
-                }
-            } while (classint < 1 || classint > 9);
-
-            //Collects the students of the class which relates to the class id
-            var chosenClass = context.Students.Where(s => s.FkClassId.Equals(classint))
-                    .Include(s => s.FkClass);
-
-            //Collects the name of the chosen class
             Console.Clear();
-            var classname = context.Classes.Where(s => s.ClassId == classint);
-            foreach (var d in classname)
-            {
-                Console.WriteLine("Elever i klassen:" + d.ClassName);
-            }
-
-            //Lists all students in chosenClass using foreach-loop
-            foreach (Student student in chosenClass)
-            {
-                Console.WriteLine("*" + student.FirstName + " " + student.LastName);
-            }
+            AnsiConsole.Write(table);
             HelpfulMethods.PressKey();
         }
 
