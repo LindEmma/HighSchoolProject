@@ -1,5 +1,6 @@
 ﻿using HighSchoolProject.Models;
 using Microsoft.EntityFrameworkCore;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,46 +13,33 @@ namespace HighSchoolProject.Logic
     {
         HighSchoolContext context = new HighSchoolContext();
 
-        // Method that shows all personnel or teachers only
+        // Method that shows all personnel and some of their information in a table
         public void ViewAllPersonnel()
         {
-            string choice = "";
-            do
+            //new table
+            var table = new Table()
             {
-                Console.WriteLine("Vill du visa:\n1.All personal?\n2.Alla lärare?");
-                choice = Console.ReadLine();
-                if (choice != "1" && choice != "2")
-                {
-                    HelpfulMethods.ClearAgain();
-                }
-            } while (choice != "1" && choice != "2");
-            Console.Clear();
+                Title = new TableTitle("All skolpersonal", "blue")
+            };
 
-            //Shows list of all personnel (last name and first name)
-            if (choice == "1")
-            {
-                var personnel1 = context.Personnel.OrderBy(p => p.FirstName)
-                    .Include(s => s.FkRole);
-                Console.WriteLine("***All personal på skolan***");
-                foreach (var personnel in personnel1)
-                {
-                    Console.WriteLine(personnel.FirstName + " " + personnel.LastName);
-                }
-            }
+            //adds columns to table
+            table.AddColumn("Namn");
+            table.AddColumn(new TableColumn("Yrkesroll").Centered());
+            table.AddColumn(new TableColumn("Avdelning").Centered());
 
-            // Shows list of all personnel that are teachers
-            if (choice == "2")
+            //finds all personell, their, roles, and sections. Ordered by roleID.
+            var personnel1 = context.Personnel
+                .Include(f => f.FkRole)
+                .Include(s=>s.FkSection)
+                .OrderBy(r => r.FkRoleId);
+
+            //foreach-loop that adds each row of information to the table
+            foreach (var p in personnel1)
             {
-                //Collects personnel where RoleID is 3( = teachers)
-                //and lists them with foreach-loop
-                var teacher = context.Personnel.Where(s => s.FkRoleId == 3);
-                Console.WriteLine("***Alla lärare på skolan***");
-                foreach (var personnel in teacher)
-                {
-                    Console.WriteLine(personnel.FirstName + " " + personnel.LastName);
-                }
+                table.AddRow(p.FirstName +" "+ p.LastName, p.FkRole.Role1, p.FkSection.SectionName);
             }
-            Console.WriteLine("**************************\n");
+            //prints table with spectre console
+            AnsiConsole.Write(table);
             HelpfulMethods.PressKey();
         }
     }

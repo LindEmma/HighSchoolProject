@@ -10,7 +10,7 @@ namespace HighSchoolProject.Logic
     {
         public static void PressKey()
         {
-            Console.WriteLine("\nTryck på valfri knapp för att gå tillbaka till menyn");
+            Console.WriteLine("\nTryck på valfri knapp för att gå tillbaka");
             Console.ReadKey();
         }
 

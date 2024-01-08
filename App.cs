@@ -5,6 +5,7 @@ namespace HighSchoolProject
     internal class App
     {
         bool RunApp { get; set; }
+        bool StayInSmallMenu { get; set; }
         ViewPersonnel VP { get; set; }
         AddPersonnel AP { get; set; }
         ViewStudents VS { get; set; }
@@ -27,6 +28,12 @@ namespace HighSchoolProject
             AG = new AddGrade();
             SAS = new SectionsAndSalary();
         }
+
+        public void BackToStartMenu()
+        {
+            StayInSmallMenu = false;
+        }
+
         public void Quit()
         {
             RunApp = false;
@@ -36,6 +43,7 @@ namespace HighSchoolProject
         {
             while (RunApp == true)
             {
+                StayInSmallMenu = true;
                 Console.Clear();
                 PrintedMenus.Header();
                 PrintedMenus.StartMenu();
@@ -43,134 +51,157 @@ namespace HighSchoolProject
                 Console.Clear();
                 PrintedMenus.Header();
 
-                switch (answer)
+                while (StayInSmallMenu)
                 {
-                    case 1:
-                        PrintedMenus.PersonnelMenu();
-                        int perAns = HelpfulMethods.ReadInt();
-                        Console.Clear();
-                        switch (perAns)
-                        {
-                            case 1:
-                                VP.ViewAllPersonnel(); //klar
-                                break;
-                            case 2:
-                                AP.AddPersonnelToDB(); //klar
-                                break;
-                            case 3:
-                                break;
-                            default:
-                                HelpfulMethods.ClearAgain();
-                                break;
-                        }
-                        break;
+                    switch (answer)
+                    {
 
-                    case 2:
-                        PrintedMenus.StudentMenu();
-                        int studAns = HelpfulMethods.ReadInt();
-                        Console.Clear();
-                        switch (studAns)
-                        {
-                            case 1:
-                                VS.ViewAllStudents(); //klar
-                                break;
-                            case 2:
-                                VS.StudentInfoFromID();
-                                break;
-                            case 3:
-                                AS.AddStudentToDB(); //klar
-                                break;
-                            case 4:
-                                break;
-                            default:
-                                HelpfulMethods.ClearAgain();
-                                break;
-                        }
-                        break;
+                        case 1:
+                            Console.Clear();
+                            PrintedMenus.Header();
+                            PrintedMenus.PersonnelMenu();
+                            int perAns = HelpfulMethods.ReadInt();
+                            Console.Clear();
+                            PrintedMenus.Header();
+                            switch (perAns)
+                            {
+                                case 1:
+                                    VP.ViewAllPersonnel(); //klar
+                                    break;
+                                case 2:
+                                    AP.AddPersonnelToDB(); //klar
+                                    break;
+                                case 3:
+                                    BackToStartMenu();
+                                    break;
+                                default:
+                                    HelpfulMethods.ClearAgain();
+                                    break;
+                            }
+                            break;
+
+                        case 2:
+                            Console.Clear();
+                            PrintedMenus.Header();
+                            PrintedMenus.StudentMenu();
+                            int studAns = HelpfulMethods.ReadInt();
+                            Console.Clear();
+                            PrintedMenus.Header();
+                            switch (studAns)
+                            {
+                                case 1:
+                                    VS.ViewAllStudents(); //klar
+                                    break;
+                                case 2:
+                                    VS.StudentInfoFromID();
+                                    break;
+                                case 3:
+                                    AS.AddStudentToDB(); //klar
+                                    break;
+                                case 4:
+                                    BackToStartMenu();
+                                    break;
+                                default:
+                                    HelpfulMethods.ClearAgain();
+                                    break;
+                            }
+                            break;
 
                         case 3:
-                        VSC.ViewSchoolClass(); //tomt
-                        break;
+                            VSC.ViewSchoolClass();
+                            BackToStartMenu();
+                            break;
 
-                    case 4:
-                        Console.Clear();
-                        PrintedMenus.CoursesMenu();
-                        int couAns = HelpfulMethods.ReadInt();
-                        Console.Clear();
-                        switch (couAns)
-                        {
-                            case 1:
-                                VC.ViewAllCourses(); //klar
-                                break;
-                            case 2:
-                                VC.ViewActiveCourses(); //klar?
-                                break;
-                            case 3:
-                                break;
-                            default:
-                                HelpfulMethods.ClearAgain();
-                                break;
-                        }
-                        break;
+                        case 4:
+                            Console.Clear();
+                            PrintedMenus.Header();
+                            PrintedMenus.CoursesMenu();
+                            int couAns = HelpfulMethods.ReadInt();
+                            Console.Clear();
+                            PrintedMenus.Header();
+                            switch (couAns)
+                            {
+                                case 1:
+                                    VC.ViewAllCourses(); //klar
+                                    break;
+                                case 2:
+                                    VC.ViewActiveCourses(); //klar?
+                                    break;
+                                case 3:
+                                    BackToStartMenu();
+                                    break;
+                                default:
+                                    HelpfulMethods.ClearAgain();
+                                    break;
+                            }
+                            break;
 
-                    case 5:
-                        Console.Clear();
-                        PrintedMenus.GradesMenu();
-                        int graAns = HelpfulMethods.ReadInt();
-                        Console.Clear();
+                        case 5:
+                            Console.Clear();
+                            PrintedMenus.Header();
+                            PrintedMenus.GradesMenu();
+                            int graAns = HelpfulMethods.ReadInt();
+                            Console.Clear();
+                            PrintedMenus.Header();
 
-                        switch (graAns)
-                        {
-                            case 1:
-                                VG.AverageGrade(); // klar
-                                break;
-                            case 2:
-                                VG.ShowAllGrades(); // klar
-                                break;
-                            case 3:
-                                AG.AddGradeToDB(); //Klar
-                                break;
-                            case 4:
-                                break;
-                            default:
-                                HelpfulMethods.ClearAgain();
-                                break;
-                        }
-                        break;
+                            switch (graAns)
+                            {
+                                case 1:
+                                    VG.AverageGrade(); // klar
+                                    break;
+                                case 2:
+                                    VG.ShowAllGrades(); // klar
+                                    break;
+                                case 3:
+                                    AG.AddGradeToDB(); //Klar
+                                    break;
+                                case 4:
+                                    BackToStartMenu();
+                                    break;
+                                default:
+                                    HelpfulMethods.ClearAgain();
+                                    break;
+                            }
+                            break;
 
-                    case 6:
-                        Console.Clear();
-                        PrintedMenus.SectionsMenu();
-                        int secAns = HelpfulMethods.ReadInt();
-                        Console.Clear();
+                        case 6:
+                            Console.Clear();
+                            PrintedMenus.Header();
+                            PrintedMenus.SectionsMenu();
+                            int secAns = HelpfulMethods.ReadInt();
+                            Console.Clear();
+                            PrintedMenus.Header();
 
-                        switch (secAns)
-                        {
-                            case 1:
-                                SAS.ViewSections(); // klar
-                                break;
-                            case 2:
-                                SAS.AverageSalary(); //klar
-                                break;
-                            case 3:
-                                SAS.SalaryPerSection(); //klar
-                                break;
-                            case 4:
-                                //logga ut till startmenyn
-                                break;
-                            default:
-                                HelpfulMethods.ClearAgain();
-                                break;
-                        }
-                        break;
+                            switch (secAns)
+                            {
+                                case 1:
+                                    SAS.ViewSections(); // klar
+                                    break;
+                                case 2:
+                                    SAS.AverageSalary(); //klar
+                                    break;
+                                case 3:
+                                    SAS.SalaryPerSection(); //klar
+                                    break;
+                                case 4:
+                                    BackToStartMenu();
+                                    //logga ut till startmenyn
+                                    break;
+                                default:
+                                    HelpfulMethods.ClearAgain();
+                                    break;
+                            }
+                            break;
 
-                    case 7:
-                        Console.WriteLine("Tack för att du använde High School App!");
-                        Quit();
-                        break;
-                    default:
-                        HelpfulMethods.ClearAgain();
-                        break;
+                        case 7:
+                            Console.WriteLine("Tack för att du använde High School DB!");
+                            BackToStartMenu();
+                            Quit();
+                            break;
+                        default:
+                            HelpfulMethods.ClearAgain();
+                            break;
+                    }
 
                 }
             }
