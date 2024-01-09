@@ -9,6 +9,7 @@ namespace HighSchoolProject.Logic
 {
     internal class AddStudent
     {
+        //adds student to database (not as detailed as personnel)
         public void AddStudentToDB()
         {
             using HighSchoolContext context = new HighSchoolContext();
@@ -18,7 +19,7 @@ namespace HighSchoolProject.Logic
             string firstName = Console.ReadLine();
             Console.Write("\nEfternamn:");
             string lastName = Console.ReadLine();
-            Console.WriteLine("Personnummer (12 siffror utan bindestreck eller mellanslag):");
+            Console.Write("\nPersonnummer (12 siffror utan bindestreck eller mellanslag):");
             string personalNumber = Console.ReadLine();
 
             if (personalNumber.Length != 12)
