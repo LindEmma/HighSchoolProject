@@ -1,61 +1,67 @@
 ﻿using HighSchoolProject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Spectre.Console;
 
 namespace HighSchoolProject.Logic
 {
     internal class AddPersonnel
     {
+        //adds new personnel to database
         public void AddPersonnelToDB()
         {
             using HighSchoolContext context = new HighSchoolContext();
-            int role, pCount;
+            int role, roleCount;
 
+            //user enters first name and last name
             Console.WriteLine("Här kan du lägga till ny personal i databasen! Fyll i uppgiftera nedan:");
-            Console.WriteLine("Förnamn:");
+            Console.Write("\nFörnamn:");
             string firstName = Console.ReadLine();
-            Console.WriteLine("Efternamn:");
+            Console.Write("\nEfternamn:");
             string lastName = Console.ReadLine();
 
             // Shows all titles to let user choose correctly from their ID
-            Console.WriteLine("Vilken titel har personalen?");
-            var roles = context.Roles.OrderBy(r=>r.Role1); //???????
-            foreach (var r in roles)
-            {
-                Console.WriteLine(r.RoleId + ". " + r.Role1);
-            }
             do
             {
-                role = HelpfulMethods.ReadInt();
-                pCount = context.Courses.Count();
-                Console.WriteLine("Vilken titel har personen? (1-" + pCount + ":");
+                Console.WriteLine("\nYrkesroller att välja bland:");
+                var roles = context.Roles.OrderBy(r => r.RoleId); //selects roles ordered by id
+                foreach (var r in roles)
+                {
+                    Console.WriteLine(r.RoleId + ". " + r.Role1);
+                }
 
-                if (role < 1 || role > pCount)
+                roleCount = context.Roles.Count();  //counts amount of roles in db
+                Console.Write("\nVilken yrkesroll har personen? (1-" + roleCount + ":");
+                role = HelpfulMethods.ReadInt();
+
+                if (role < 1 || role > roleCount)
                 {
                     Console.Clear();
-                    Console.WriteLine("Vänligen välj 1-" + pCount);
+                    Console.WriteLine("Vänligen välj 1-" + roleCount);
                 }
-            } while (role < 1 || role > pCount);
+            } while (role < 1 || role > roleCount);
 
-            Console.WriteLine("Skriv in personalens månadslön i kronor:");
+            //asks for the personnels salary
+            Console.Write("Skriv in personalens månadslön i kronor:");
             decimal salary = HelpfulMethods.ReadDecimal();
-            string answer = "";
 
-            while(answer.ToLower()!="j"||answer.ToLower()!="n")
+            // asks user if the information is correct or not
+            string answer = "";
+            while (answer.ToLower() != "j" || answer.ToLower() != "n")
             {
                 Console.WriteLine("Stämmer uppgifterna nedan? (j/n)");
 
-                Console.WriteLine($"Namn:{firstName} {lastName}\n Yrkestitel: {role}\nMånadslön: {salary}");
+                Console.WriteLine($"Namn:{firstName} {lastName}\n Yrkesroll: {role}\nMånadslön: {salary}");
                 answer = Console.ReadLine();
 
+                //if user is not happy with the input, the personnel is not added to db
                 if (answer == "n" || answer == "N")
                 {
                     Console.WriteLine("Personalen läggs inte in i databasen, testa gärna igen!");
                 }
-                else if (answer == "j" || answer == "J")//Creates new personnel, saves it to the database
+
+                //if user answer J, new personnel is added to db
+                //along with todays date as employment date
+                else if (answer == "j" || answer == "J")
                 {
 
                     DateOnly date = DateOnly.FromDateTime(DateTime.Now);
@@ -66,11 +72,11 @@ namespace HighSchoolProject.Logic
                 }
                 else
                 {
-                    HelpfulMethods.ClearAgain();
+                    Console.Clear();
+                    Console.WriteLine("Vänligen svara j eller n");
                 }
-
-                HelpfulMethods.PressKey();
             }
+            HelpfulMethods.PressKey();
         }
     }
 }
