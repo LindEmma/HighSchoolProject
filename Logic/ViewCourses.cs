@@ -12,7 +12,8 @@ namespace HighSchoolProject.Logic
     internal class ViewCourses
     {
         HighSchoolContext context = new HighSchoolContext();
-
+         
+        //method to show all courses in db
         public void ViewAllCourses()
         {
             Table table = new Table()
@@ -37,6 +38,7 @@ namespace HighSchoolProject.Logic
             HelpfulMethods.PressKey();
         }
 
+        //method to show active courses in db based in datetime.now
         public void ViewActiveCourses()
         {
             DateOnly dt = DateOnly.FromDateTime(DateTime.Now);

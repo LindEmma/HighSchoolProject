@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace HighSchoolProject.Logic
 {
+    // some helpful small methods used often
     public static class HelpfulMethods
     {
         public static void PressKey()

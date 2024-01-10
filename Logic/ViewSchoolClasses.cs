@@ -7,11 +7,13 @@ namespace HighSchoolProject.Logic
     internal class ViewSchoolClasses
     {
         HighSchoolContext context = new HighSchoolContext();
+        
+        // method that shows all school classes and shows its students
         public void ViewSchoolClass()
         {
             Console.WriteLine("Alla skolklasser:");
 
-            var sc = context.Classes.OrderBy(c => c.ClassId).Distinct();
+            var sc = context.Classes.OrderBy(c => c.ClassId).Distinct(); //selects classes ordered by ID
             int classID;
             do
             {

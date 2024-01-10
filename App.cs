@@ -29,16 +29,20 @@ namespace HighSchoolProject
             SAS = new SectionsAndSalary();
         }
 
+        //takes the user back to the start menu
         public void BackToStartMenu()
         {
             StayInSmallMenu = false;
         }
 
+        //quits app
         public void Quit()
         {
             RunApp = false;
         }
 
+        //the whole program in method Run(), has a switch case with the start menu and nested 
+        // switch cases with smaller menus sorted by what user wants to see/add
         public void Run()
         {
             while (RunApp == true)
@@ -46,7 +50,7 @@ namespace HighSchoolProject
                 StayInSmallMenu = true;
                 Console.Clear();
                 PrintedMenus.Header();
-                PrintedMenus.StartMenu();
+                PrintedMenus.StartMenu(); //start menu
                 int answer = HelpfulMethods.ReadInt();
                 Console.Clear();
                 PrintedMenus.Header();
@@ -55,7 +59,7 @@ namespace HighSchoolProject
                 {
                     switch (answer)
                     {
-
+                        //switch case menu (perAns) with choices for personnel
                         case 1:
                             Console.Clear();
                             PrintedMenus.Header();
@@ -66,13 +70,13 @@ namespace HighSchoolProject
                             switch (perAns)
                             {
                                 case 1:
-                                    VP.ViewAllPersonnel(); //klar
+                                    VP.ViewAllPersonnel(); //shows all personnel and their information
                                     break;
                                 case 2:
-                                    AP.AddPersonnelToDB(); //klar
+                                    AP.AddPersonnelToDB(); //adds a personnel to the database
                                     break;
                                 case 3:
-                                    BackToStartMenu();
+                                    BackToStartMenu(); // goes back to the start menu
                                     break;
                                 default:
                                     HelpfulMethods.ClearAgain();
@@ -80,6 +84,7 @@ namespace HighSchoolProject
                             }
                             break;
 
+                            // switch case menu for choice students
                         case 2:
                             Console.Clear();
                             PrintedMenus.Header();
@@ -90,16 +95,16 @@ namespace HighSchoolProject
                             switch (studAns)
                             {
                                 case 1:
-                                    VS.ViewAllStudents(); //klar
+                                    VS.ViewAllStudents(); // shows all students in different orders
                                     break;
                                 case 2:
-                                    VS.StudentInfoFromID();
+                                    VS.StudentInfoFromID(); //lets user pick a student ID and shows student connected to it
                                     break;
                                 case 3:
-                                    AS.AddStudentToDB(); //klar
+                                    AS.AddStudentToDB(); // adds student to database
                                     break;
                                 case 4:
-                                    BackToStartMenu();
+                                    BackToStartMenu(); //goes back to start menu
                                     break;
                                 default:
                                     HelpfulMethods.ClearAgain();
@@ -108,10 +113,11 @@ namespace HighSchoolProject
                             break;
 
                         case 3:
-                            VSC.ViewSchoolClass();
+                            VSC.ViewSchoolClass(); //shows all school classes and its students
                             BackToStartMenu();
                             break;
 
+                            //switch case menu for courses
                         case 4:
                             Console.Clear();
                             PrintedMenus.Header();
@@ -122,13 +128,13 @@ namespace HighSchoolProject
                             switch (couAns)
                             {
                                 case 1:
-                                    VC.ViewAllCourses(); //klar
+                                    VC.ViewAllCourses(); //shows all courses
                                     break;
                                 case 2:
-                                    VC.ViewActiveCourses(); //klar?
+                                    VC.ViewActiveCourses(); //shows only active courses
                                     break;
                                 case 3:
-                                    BackToStartMenu();
+                                    BackToStartMenu(); // backs to start menu
                                     break;
                                 default:
                                     HelpfulMethods.ClearAgain();
@@ -136,6 +142,7 @@ namespace HighSchoolProject
                             }
                             break;
 
+                            //switch case menu for set grades
                         case 5:
                             Console.Clear();
                             PrintedMenus.Header();
@@ -147,16 +154,16 @@ namespace HighSchoolProject
                             switch (graAns)
                             {
                                 case 1:
-                                    VG.AverageGrade(); // klar
+                                    VG.AverageGrade(); // shows average grade in specific course
                                     break;
                                 case 2:
-                                    VG.ShowAllGrades(); // klar
+                                    VG.ShowAllGrades(); // shows all set grades with info
                                     break;
                                 case 3:
-                                    AG.AddGradeToDB(); //Klar
+                                    AG.AddGradeToDB(); // adds a grade to db if user is a teacher
                                     break;
                                 case 4:
-                                    BackToStartMenu();
+                                    BackToStartMenu();// backs to start menu
                                     break;
                                 default:
                                     HelpfulMethods.ClearAgain();
@@ -164,6 +171,7 @@ namespace HighSchoolProject
                             }
                             break;
 
+                            // switch menu for the sections at school
                         case 6:
                             Console.Clear();
                             PrintedMenus.Header();
@@ -175,17 +183,16 @@ namespace HighSchoolProject
                             switch (secAns)
                             {
                                 case 1:
-                                    SAS.ViewSections(); // klar
+                                    SAS.ViewSections(); // views all sections and their personnel
                                     break;
                                 case 2:
-                                    SAS.AverageSalary(); //klar
+                                    SAS.AverageSalary(); //shows average salary per section with bar chart
                                     break;
                                 case 3:
-                                    SAS.SalaryPerSection(); //klar
+                                    SAS.SalaryPerSection(); // shows sum of salary paid per month with bar chart
                                     break;
                                 case 4:
-                                    BackToStartMenu();
-                                    //logga ut till startmenyn
+                                    BackToStartMenu();// backs to start menu
                                     break;
                                 default:
                                     HelpfulMethods.ClearAgain();
@@ -193,6 +200,7 @@ namespace HighSchoolProject
                             }
                             break;
 
+                            //quits program with a message
                         case 7:
                             Console.WriteLine("Tack för att du använde High School DB!");
                             BackToStartMenu();

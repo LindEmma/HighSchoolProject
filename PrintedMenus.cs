@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace HighSchoolProject
 {
+    // printed menus and header (text only)
     public static class PrintedMenus
     {
         public static void Header()
